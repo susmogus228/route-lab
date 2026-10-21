@@ -1,0 +1,242 @@
+{
+  "unchanged_original_result_files": 59,
+  "all_sha256_match": true,
+  "files": {
+    "results/benchmark-raw.csv": {
+      "sha256": "41488aa227d0c68cd2547aa66ed8f48f3102fc8162ba326c33286270ff35f25a",
+      "unchanged": true
+    },
+    "results/benchmark.csv": {
+      "sha256": "39b3381bec25568f7563c201bdc1deebb170ec78762bd57496a8ea0d03a4a955",
+      "unchanged": true
+    },
+    "results/benchmark.json": {
+      "sha256": "ce2992350b360445e05411f06b5375ea0a1cf6b4884e1b50aadc7bb56ccafb7a",
+      "unchanged": true
+    },
+    "results/benchmark.md": {
+      "sha256": "842574891e8bdc6019d3640d501bb4b94e0194ade5d86ee686de7505bd3d67d3",
+      "unchanged": true
+    },
+    "results/benchmark.svg": {
+      "sha256": "d20414a3433c4180d6eec4263b326549176000ecb28d7a73f645048d51f19ce9",
+      "unchanged": true
+    },
+    "results/core-verification.json": {
+      "sha256": "14e5f031a6f755722d67ebdb7859e2cd1ddc033623fb170b3281c82dc14fa3fd",
+      "unchanged": true
+    },
+    "results/example-route.csv": {
+      "sha256": "2eb539ce4dfebff7ad954ac756f5ec9137a83355cdb5cfc10dba2676a1f81c06",
+      "unchanged": true
+    },
+    "results/example-route.json": {
+      "sha256": "07e9fa8853e66b163c22a9ed0392dab2ccca4d871f78682adbb0b4a11cdc326c",
+      "unchanged": true
+    },
+    "results/protocol.json": {
+      "sha256": "f7113cc870276410dc9bbd36eb47005a0f21dbe62ba0882b14b8bbc13186204f",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-128-seed-11.json": {
+      "sha256": "ed531b2e9a829eb183776085b3b2be9f58208dac4b85097f02fc21701ae11309",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-128-seed-22.json": {
+      "sha256": "e5242a870f2bcf54e57361adbd67a4ab3b1c41e8ffffa00edd69dde71b8b3086",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-128-seed-33.json": {
+      "sha256": "864bf0b4c01101db03a2006b4f594e19214173cd08cc17d13426cba97dcca001",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-128-seed-44.json": {
+      "sha256": "4f02df848141de04d3df16dabe7174144c54c1bb27dd3549c3344986ef300a6a",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-128-seed-55.json": {
+      "sha256": "eb9a41c4fe066bba358b0f0736500673b07c648cce22491918fd071c04e4df5c",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-32-seed-11.json": {
+      "sha256": "7ebca16c81afd6342e812996002ada60b05c4044a923a6f9557a03d4f51f4b92",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-32-seed-22.json": {
+      "sha256": "09896a3c82d69f32d070f647021bafdacddc0ff55fb279608e0731b773c00327",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-32-seed-33.json": {
+      "sha256": "5e9390bd7e9d45f0e4f39276bcf00ad7b4f5b75bbf533e0f3c2a879b6009b004",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-32-seed-44.json": {
+      "sha256": "29dcf43261a6d2d4eb1a6e6ba9aeafd43ce29c239a6b12eb5d00e254f498dd69",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-32-seed-55.json": {
+      "sha256": "86a3e33ddb9a3641f420473410e3ffec82f38557afa36bb1228c51586960795e",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-64-seed-11.json": {
+      "sha256": "59e62b23864b6c91db9d86722958cda80f4536b9ead1587de6a751c115ed6eb9",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-64-seed-22.json": {
+      "sha256": "88d799f21af8bcaf5d66ab2e84a70a65701141bfde43a36049a8f5c7e7907d1c",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-64-seed-33.json": {
+      "sha256": "04e443b797d9dd3c524d3188f80ae2f039291888347ea0358a946d1c22c5fa27",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-64-seed-44.json": {
+      "sha256": "431cacdd87484df937fce3696d3488a8908cdf3ce725dc0a44419cf38662238a",
+      "unchanged": true
+    },
+    "results/scenarios/blocked_weighted-64-seed-55.json": {
+      "sha256": "237664486e870fa85d8232cb1ed38489175f138d57e0a646ed0c218c35c6fe70",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-128-seed-11.json": {
+      "sha256": "84772f7920723d6ed0de040ee6dab7ed6250d4abd2d658149eb9cbfe4bf2e915",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-128-seed-22.json": {
+      "sha256": "84772f7920723d6ed0de040ee6dab7ed6250d4abd2d658149eb9cbfe4bf2e915",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-128-seed-33.json": {
+      "sha256": "84772f7920723d6ed0de040ee6dab7ed6250d4abd2d658149eb9cbfe4bf2e915",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-128-seed-44.json": {
+      "sha256": "84772f7920723d6ed0de040ee6dab7ed6250d4abd2d658149eb9cbfe4bf2e915",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-128-seed-55.json": {
+      "sha256": "84772f7920723d6ed0de040ee6dab7ed6250d4abd2d658149eb9cbfe4bf2e915",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-32-seed-11.json": {
+      "sha256": "01f80e39616d003c5969ba1cac7b4f7b86f2930f229a86630492ce1c41a5526f",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-32-seed-22.json": {
+      "sha256": "01f80e39616d003c5969ba1cac7b4f7b86f2930f229a86630492ce1c41a5526f",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-32-seed-33.json": {
+      "sha256": "01f80e39616d003c5969ba1cac7b4f7b86f2930f229a86630492ce1c41a5526f",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-32-seed-44.json": {
+      "sha256": "01f80e39616d003c5969ba1cac7b4f7b86f2930f229a86630492ce1c41a5526f",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-32-seed-55.json": {
+      "sha256": "01f80e39616d003c5969ba1cac7b4f7b86f2930f229a86630492ce1c41a5526f",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-64-seed-11.json": {
+      "sha256": "0e9275b54ab1b99890643f1c9ab90a83339973eb89eaf6ccb71a3998291a3a88",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-64-seed-22.json": {
+      "sha256": "0e9275b54ab1b99890643f1c9ab90a83339973eb89eaf6ccb71a3998291a3a88",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-64-seed-33.json": {
+      "sha256": "0e9275b54ab1b99890643f1c9ab90a83339973eb89eaf6ccb71a3998291a3a88",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-64-seed-44.json": {
+      "sha256": "0e9275b54ab1b99890643f1c9ab90a83339973eb89eaf6ccb71a3998291a3a88",
+      "unchanged": true
+    },
+    "results/scenarios/open_uniform-64-seed-55.json": {
+      "sha256": "0e9275b54ab1b99890643f1c9ab90a83339973eb89eaf6ccb71a3998291a3a88",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-128-seed-11.json": {
+      "sha256": "12e7bb789cc2b92d45628b15fbf70ab7e6099b88e277586a93e128b3a57c0912",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-128-seed-22.json": {
+      "sha256": "5990f54e6364e66f39aa1b696fecb4a6e114b4cb591c6499f03a0655bbfdd7fb",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-128-seed-33.json": {
+      "sha256": "1ca0957a4f17cd4422ab0053ae34ea9dc7eda5f92f39fef89a51224385aa2594",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-128-seed-44.json": {
+      "sha256": "a90fa6d063ab89661f1a30326c585347c84da941d90c1cfc04a03b8e6ed44a97",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-128-seed-55.json": {
+      "sha256": "638979f994fa33bbfbf713b52cf7f44c06ba4c55940dccacaacf25366ff82f0e",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-32-seed-11.json": {
+      "sha256": "ee89ad3c3320c5dc84af895e5cf19530c796379593c4f95a517a3093994bf4db",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-32-seed-22.json": {
+      "sha256": "76446d989e0b52ee3e4bf7f8cd13cdad3df7ceaf78cf1e36fd8296127213bc97",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-32-seed-33.json": {
+      "sha256": "b040533b40d49b68939bbc1364b48e1bd1293659bbd2e4c7071fb9fe59614bb4",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-32-seed-44.json": {
+      "sha256": "41bb30993b5093c6966def76dbd4aad6349e49d1abb476e2075dcbb0d530cb41",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-32-seed-55.json": {
+      "sha256": "47625b22b346723fbb5e8b40a380c0ddf70b3221d7f84d3c580a79ba122b5ede",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-64-seed-11.json": {
+      "sha256": "fec2568e96f59d5a3860e94ef303b1a26ab869f0b0c62a332f33561b76a2f473",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-64-seed-22.json": {
+      "sha256": "5041697e2b15c11a76aea93658f864177c543860e6f3bf6623a9adcf155c1920",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-64-seed-33.json": {
+      "sha256": "1123330c031a6ccf12d9d66aa64f01ca13d5402d4a57e0d0864e6f36dfde18d3",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-64-seed-44.json": {
+      "sha256": "63f99bbaff42fb8dcdc67e7590400cdc233ea4488d745f650536d1e9aeea2b54",
+      "unchanged": true
+    },
+    "results/scenarios/open_weighted-64-seed-55.json": {
+      "sha256": "eaec40ab7a06f5d1292531f062db2c758df45406be281526439e6aed9bdc4e06",
+      "unchanged": true
+    },
+    "results/source-snapshot/benchmark.py": {
+      "sha256": "dd3fa9b6795ec83d4c29cb6d9cffefa363ff56e5622a56b6a0c1bca4c931c0c4",
+      "unchanged": true
+    },
+    "results/source-snapshot/core.py": {
+      "sha256": "e8d0846f0d08230f2ecc0a8cf82488600665b79e192d24de2ab0b7baf8b1ba08",
+      "unchanged": true
+    },
+    "results/source-snapshot/README.md": {
+      "sha256": "58070b5ba88b3384f7d8d8ad112f058cdac871da42ed7822ba45f87b7eb8785d",
+      "unchanged": true
+    },
+    "results/source-snapshot/service.py": {
+      "sha256": "02917f152507a4b830a6b70030c606b132e1fc5dec2a8236b1837c059bcda762",
+      "unchanged": true
+    },
+    "results/source-snapshot/__init__.py": {
+      "sha256": "5fc9968be16cd35e2fc91f4d0888c20d9fe2816e2fd3cfc60fa8029fcb0178fe",
+      "unchanged": true
+    }
+  }
+}

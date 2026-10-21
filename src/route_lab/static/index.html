@@ -1,0 +1,82 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f0f0f"><meta name="description" content="Edit weighted grids and compare real Dijkstra and A-star routes."><title>RouteLab — inspect the evidence</title><link rel="stylesheet" href="/static/style.css"><script defer src="/static/app.js"></script><script defer src="/static/lab.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="topbar"><a class="brand" href="#workspace">Route<span class="accent">Lab</span></a><nav aria-label="Main"><a href="#workspace" data-nav="workspace">Route</a><a href="#lab" data-nav="lab">Lab</a><a href="#benchmark" data-nav="benchmark" aria-label="Benchmark">Bench</a><a href="#evidence" data-nav="evidence">Data</a><a href="#api" data-nav="api">API</a></nav></header><main id="main" tabindex="-1"><div id="init-error" hidden><p class="notice">The local service could not load its recorded evidence.</p><button id="retry-init">Retry loading</button></div><div id="status" class="status" role="status" aria-live="polite"></div><section data-panel="workspace">
+  <div class="hero">
+    <div>
+      <h1>A cheaper path, explained.</h1>
+      <p class="subtitle">Compare routes on a weighted grid.</p>
+    </div>
+    <p class="provenance">Original synthetic maps<br>Live algorithm workspace</p>
+  </div>
+  <section class="experiment-entry" aria-label="Start a routing experiment">
+    <p>Find when congestion changes the best route, or what happens when a bridge closes.</p>
+    <div class="actions"><button id="experiment-congestion" type="button" disabled>Find the congestion threshold</button><button id="experiment-closures" type="button" disabled>Test a bridge closure</button></div>
+    <p id="experiment-status" class="small muted" role="status">Loading experiment maps…</p><button id="experiment-retry" type="button" hidden>Retry experiment maps</button>
+  </section>
+  <div class="controls">
+    <div class="field"><label for="scenario">Scenario</label><select id="scenario"></select></div>
+    <div class="field"><label for="algorithm">Algorithm</label><select id="algorithm"><option value="astar">A*</option><option value="dijkstra">Dijkstra</option></select></div>
+    <div class="actions"><button id="solve" class="primary" type="button">Find route</button><button id="compare" type="button">Compare both</button></div>
+  </div>
+  <div class="status-slot"></div>
+  <div class="route-layout">
+    <section class="map-workspace" aria-label="Map editor">
+      <div class="work-head"><h2 id="map-title">Editable cost map</h2><span class="badge" id="map-size"></span></div>
+      <div class="toolrow">
+        <label for="paint"><span class="tool-name">Edit mode</span><select id="paint"><option value="inspect">Inspect</option><option value="0">Wall</option><option value="1">Cost 1</option><option value="3">Cost 3</option><option value="5">Cost 5</option><option value="9">Cost 9</option><option value="start">Place start</option><option value="goal">Place goal</option></select></label>
+        <button id="reset-map" type="button" aria-label="Reset map">Reset</button>
+        <button id="export-map" type="button" aria-label="Export map as JSON">Export</button>
+      </div>
+      <p id="route-summary" class="route-summary">Run a search to inspect its cost and path.</p>
+      <div class="canvas-frame"><canvas id="route-canvas" tabindex="0" role="img" aria-label="Editable weighted grid. Arrow keys move the cell cursor; Space or Enter applies edit mode."></canvas></div>
+      <p id="cell-info" class="caption">Click a cell to inspect it. Arrow keys move; Space or Enter edits.</p>
+      <div class="legend"><span><b>S</b> Start</span><span><b>G</b> Goal</span><span>Dark = wall</span><span>Number = entry cost</span></div><p id="scenario-note" class="form-note" hidden></p>
+      <details><summary>Map rules and JSON import</summary>
+        <p class="muted">Synthetic grid with four-direction movement. A step pays the destination cell's cost; the start costs zero. A* uses Manhattan distance × the minimum traversable cost.</p>
+        <p class="muted">Import a rectangular grid up to 128×128. Coordinates are [row, column]; 0 is a wall, 1–9 is an entry cost.</p>
+        <label for="map-json">Map JSON</label><textarea id="map-json" rows="6" spellcheck="false"></textarea>
+        <button id="import-map" type="button">Load validated map</button>
+      </details>
+    </section>
+    <aside aria-label="Route inspection">
+      <h2 class="inspector-title">Route result</h2>
+      <p class="muted small">Minimum cost can take more steps than the shortest-looking path.</p>
+      <div id="route-result" aria-live="polite"><p>Run an algorithm to inspect its result.</p></div>
+      <div id="comparison" class="comparison" hidden></div>
+      <div class="decision"><h3>Expansion trace</h3><p class="muted small">Accepted expansions only. The recording limit never stops the search.</p>
+        <label for="trace-step">Expansions shown <span id="trace-count">0</span></label><input id="trace-step" class="range" type="range" min="0" max="0" value="0" disabled>
+        <p id="trace-note" class="form-note"></p>
+      </div>
+    </aside>
+  </div>
+  <details><summary>Path coordinates and costs</summary><div id="path-table" class="table-wrap"></div></details>
+</section>
+<section data-panel="lab" hidden>
+  <div class="hero lab-hero"><div><h1>Test a route’s limits.</h1><p class="subtitle">Change a cost or close a passage. Measure the effect.</p></div><span class="provenance">Live, synthetic experiments<br>Same Python solver and API</span></div>
+  <div class="lab-controls"><div class="field"><label for="lab-scenario">Experiment map</label><select id="lab-scenario"></select></div><button id="lab-use-editor" type="button">Use editor map</button></div>
+  <div class="lab-modes" role="group" aria-label="Experiment"><button id="lab-threshold-mode" type="button" aria-pressed="true">Congestion</button><button id="lab-closures-mode" type="button" aria-pressed="false">Closures</button></div>
+  <p id="lab-status" class="lab-status" role="status" aria-live="polite">Loading experiment maps…</p>
+  <div id="lab-layout" class="lab-layout">
+    <section class="lab-map" aria-label="Experiment map"><div class="work-head"><h2 id="lab-title" tabindex="-1">Rush Hour</h2><span id="lab-size" class="badge"></span></div>
+      <div class="canvas-frame"><canvas id="lab-canvas" tabindex="0" role="img" aria-label="Experiment grid. Use arrow keys to move and Enter to select a cell."></canvas></div>
+      <p id="lab-cell-info" class="caption"></p><p id="lab-legend" class="small muted"></p>
+      <p id="lab-description" class="lab-description"></p>
+      <div class="inline-buttons lab-map-actions"><button id="lab-edit" type="button">Edit this map</button><button id="lab-export" type="button" disabled>Export analysis</button></div>
+      <p class="form-note">Synthetic entry costs, not minutes. Analysis supports up to 256 cells. The editor supports larger maps.</p>
+    </section>
+    <aside class="lab-inspector" aria-label="Experiment result">
+      <section id="lab-threshold-panel"><h2>When does the route change?</h2><p class="small muted">Raise the cost of the outlined cells together. Click a traversable cell to test a different zone.</p>
+        <label for="lab-cost" class="lab-slider-label">Zone entry cost <output id="lab-cost-value" for="lab-cost">1</output></label><input id="lab-cost" class="range" type="range" min="1" max="9" step="1" value="1" disabled>
+        <div id="lab-threshold-metrics" aria-live="polite"></div><p id="lab-threshold-insight" class="lab-insight"></p>
+        <div id="lab-cost-chart" class="lab-cost-chart"></div>
+        <p class="small muted">Blue: optimal cost · Dashed: cost of keeping the cost-1 reference route. Equal-cost alternatives do not count as a switch.</p>
+        <details><summary>Costs at all nine levels</summary><div id="lab-levels" class="table-wrap"></div></details>
+      </section>
+      <section id="lab-closures-panel" hidden><h2>Find the fragile passages.</h2><p class="small muted">Close each traversable cell once, keeping the rest of the map unchanged. Start and goal stay open.</p>
+        <div id="lab-closure-metrics" aria-live="polite"></div><p id="lab-closure-insight" class="lab-insight"></p><p id="lab-closure-selection" class="notice"></p><p id="lab-before-after" class="small muted"></p>
+        <button id="lab-bridge" type="button">Try the bridge map</button><button id="lab-repair" type="button" hidden>Open crossing [2, 5]</button>
+        <details><summary>Inspect closure results</summary><div id="lab-closure-table" class="table-wrap"></div></details>
+      </section>
+      <details><summary>Reproduce this calculation</summary><p class="small muted">Export the map and measured response, or call the same operation in the API explorer.</p><a href="#api">Open API explorer</a><p><code id="lab-endpoint">POST /api/threshold</code></p></details>
+    </aside>
+  </div>
+</section>
+<section data-panel="benchmark" hidden><div class="status-slot"></div><div class="panel-head"><p class="eyebrow">Recorded, repeatable measurements</p><h1>Compare the work, not a promise.</h1><p>Fixed maps and seeds, equal-cost correctness checks, warmups and repeated timings. Interactive timings include trace recording; the benchmark disables it.</p></div><div id="benchmark-table" class="table-wrap"></div><details><summary>Full benchmark and environment</summary><pre id="benchmark-json" tabindex="0"></pre></details><p class="notice">A* is not guaranteed to be faster on every map. These synthetic grids are algorithm experiments, not geographic navigation.</p><a href="#evidence">Download raw timings and exact maps</a></section><section data-panel="api" hidden><div class="status-slot"></div><div class="panel-head"><p class="eyebrow">A real local API</p><h1>Use it from your own code.</h1><p>These requests call the same Python service as the workspace. No API key or external inference service is required.</p></div><a href="/openapi.json" download="openapi.json">Download OpenAPI 3.1 schema</a><div class="api-controls"><div class="field"><label for="endpoint">Endpoint</label><select id="endpoint"></select></div><button id="send-api" class="primary">Send request</button><button id="copy-curl">Copy curl</button></div><div class="two"><section><h2>Request</h2><p class="form-note" id="api-help">JSON body. Input is validated by the server.</p><label class="small muted" for="api-body">Request JSON</label><textarea id="api-body" rows="16" spellcheck="false"></textarea><p id="api-get-note" class="notice" hidden>This GET endpoint has no request body.</p></section><section><div class="work-head"><h2>Response</h2><span id="http-status" class="badge">Not sent</span></div><pre id="api-response" tabindex="0">Send a request to inspect the response.</pre></section></div><details><summary>Local service limits</summary><p>Loopback only. Same-origin requests, JSON bodies up to 256 KiB, bounded concurrent calculations. This server is intended for local exploration. Review deployment, authentication and process supervision before exposing it publicly.</p></details></section><section data-panel="evidence" hidden><div class="status-slot"></div><div class="panel-head"><p class="eyebrow">Source and reproducibility</p><h1>Inspect the evidence.</h1><p>Download the files produced by the recorded run. Model files stay local and are loaded only from trusted artifacts.</p></div><pre id="provenance" tabindex="0">Loading provenance…</pre><ul id="evidence-files" class="evidence-list"></ul></section><footer class="footer"><span>RouteLab · local, reproducible experiment</span><span>Live calculations and recorded measurements are labeled separately.</span></footer></main></body></html>

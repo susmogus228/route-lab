@@ -1,0 +1,10 @@
+include design-qa.md
+include README.md LICENSE CONTRIBUTING.md
+recursive-include docs *.md *.png *.svg *.json
+recursive-include scripts *.py
+recursive-include examples *.json
+recursive-include results *.json *.csv *.md *.svg
+recursive-include results/source-snapshot *.py
+recursive-include src/route_lab/static *
+recursive-include tests *.py *.cjs
+global-exclude __pycache__ *.py[cod]

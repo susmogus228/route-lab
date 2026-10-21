@@ -1,0 +1,14 @@
+{
+  "kind": "route",
+  "version": "0.1.1",
+  "import_path": "D:\\Projects\\applied-ai-portfolio\\route-lab\\work\\audit-fix\\wheel-installed\\route_lab\\__init__.py",
+  "wheel": "route_lab-0.1.1-py3-none-any.whl",
+  "wheel_sha256": "b28f81f8aff07a6f2d92ea4e73b28acce6e2f3d53047797a9c58e2b1ca8e958e",
+  "checks": [
+    "import resolves to isolated wheel target",
+    "installed experiment entry and import guard assets",
+    "installed HTTP route solve and OpenAPI"
+  ],
+  "status": "pass",
+  "scope": "Isolated --target package, existing project dependencies; loopback HTTP only"
+}

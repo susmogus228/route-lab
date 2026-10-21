@@ -1,0 +1,29 @@
+{
+  "import": {
+    "checks": 7,
+    "cases": [
+      "late import cannot overwrite a newer scenario",
+      "late import preserves a newer JSON draft",
+      "editing only the draft does not commit the pending import",
+      "editing JSON away and back still cancels the older validation",
+      "stale import failure cannot replace the newer status",
+      "current successful import still commits",
+      "validated import preserves its exact map"
+    ]
+  },
+  "entry": {
+    "checks": 10,
+    "cases": [
+      "first-screen congestion action opens the Lab",
+      "congestion action selects the intended experiment",
+      "experiment action moves keyboard focus to the destination heading",
+      "closure action selects the bridge experiment",
+      "bridge entry uses closure analysis",
+      "experiment entry leaves the editor map intact",
+      "experiment links fit at CSS width 304",
+      "experiment links fit at CSS width 1280",
+      "unavailable presets disable experiment entry",
+      "preset loading has a working retry"
+    ]
+  }
+}

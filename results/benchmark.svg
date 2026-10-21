@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="643" viewBox="0 0 960 643" role="img" aria-labelledby="title desc">
+<title id="title">RouteLab measured search time by map family</title>
+<desc id="desc">Bars show the median across scenario timing medians. Each scenario has at least five measured runs. Runtime depends on the machine and generated maps.</desc>
+<rect width="960" height="100%" fill="#fff"/>
+<g font-family="system-ui, sans-serif" fill="#171717">
+<text x="32" y="36" font-size="23" font-weight="700">RouteLab: recorded search time</text>
+<text x="32" y="61" font-size="13">Median of per-map medians (ms); trace disabled. Dijkstra gray; A* blue.</text>
+<text x="32" y="95" font-size="17" font-weight="600">open uniform</text>
+<text x="32" y="131" font-size="13">32 x 32</text>
+<rect x="145" y="115" width="34.05" height="13" fill="#666666"/>
+<text x="187.05" y="126" font-size="11">2.280</text>
+<rect x="145" y="132" width="2.77" height="13" fill="#0969da"/>
+<text x="155.77" y="143" font-size="11">0.185</text>
+<text x="32" y="173" font-size="13">64 x 64</text>
+<rect x="145" y="157" width="146.05" height="13" fill="#666666"/>
+<text x="299.05" y="168" font-size="11">9.777</text>
+<rect x="145" y="174" width="5.91" height="13" fill="#0969da"/>
+<text x="158.91" y="185" font-size="11">0.396</text>
+<text x="32" y="215" font-size="13">128 x 128</text>
+<rect x="145" y="199" width="650.00" height="13" fill="#666666"/>
+<text x="803.00" y="210" font-size="11">43.509</text>
+<rect x="145" y="216" width="12.14" height="13" fill="#0969da"/>
+<text x="165.14" y="227" font-size="11">0.812</text>
+<text x="32" y="266" font-size="17" font-weight="600">open weighted</text>
+<text x="32" y="302" font-size="13">32 x 32</text>
+<rect x="145" y="286" width="28.52" height="13" fill="#666666"/>
+<text x="181.52" y="297" font-size="11">2.255</text>
+<rect x="145" y="303" width="33.05" height="13" fill="#0969da"/>
+<text x="186.05" y="314" font-size="11">2.613</text>
+<text x="32" y="344" font-size="13">64 x 64</text>
+<rect x="145" y="328" width="127.65" height="13" fill="#666666"/>
+<text x="280.65" y="339" font-size="11">10.092</text>
+<rect x="145" y="345" width="145.77" height="13" fill="#0969da"/>
+<text x="298.77" y="356" font-size="11">11.524</text>
+<text x="32" y="386" font-size="13">128 x 128</text>
+<rect x="145" y="370" width="561.09" height="13" fill="#666666"/>
+<text x="714.09" y="381" font-size="11">44.360</text>
+<rect x="145" y="387" width="650.00" height="13" fill="#0969da"/>
+<text x="803.00" y="398" font-size="11">51.389</text>
+<text x="32" y="437" font-size="17" font-weight="600">blocked weighted</text>
+<text x="32" y="473" font-size="13">32 x 32</text>
+<rect x="145" y="457" width="26.91" height="13" fill="#666666"/>
+<text x="179.91" y="468" font-size="11">1.634</text>
+<rect x="145" y="474" width="29.36" height="13" fill="#0969da"/>
+<text x="182.36" y="485" font-size="11">1.783</text>
+<text x="32" y="515" font-size="13">64 x 64</text>
+<rect x="145" y="499" width="161.89" height="13" fill="#666666"/>
+<text x="314.89" y="510" font-size="11">9.828</text>
+<rect x="145" y="516" width="149.09" height="13" fill="#0969da"/>
+<text x="302.09" y="527" font-size="11">9.051</text>
+<text x="32" y="557" font-size="13">128 x 128</text>
+<rect x="145" y="541" width="573.94" height="13" fill="#666666"/>
+<text x="726.94" y="552" font-size="11">34.844</text>
+<rect x="145" y="558" width="650.00" height="13" fill="#0969da"/>
+<text x="803.00" y="569" font-size="11">39.461</text>
+<text x="32" y="626" font-size="12">Original synthetic maps; guaranteed corridor. No universal speedup claim. See raw CSV and protocol.</text></g></svg>

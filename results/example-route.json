@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "algorithm": "astar",
+  "reachable": true,
+  "cost": 6,
+  "cost_unit": "abstract_entry_cost",
+  "path": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      0,
+      4
+    ]
+  ],
+  "steps": 6,
+  "expanded": 7,
+  "heap_peak": 4,
+  "runtime_ms": 0.0389,
+  "trace": [],
+  "trace_truncated": true,
+  "heuristic": "manhattan_times_min_entry_cost"
+}

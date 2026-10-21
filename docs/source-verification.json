@@ -1,0 +1,16 @@
+{
+  "backend_files_preserved": [
+    "src/route_lab/benchmark.py",
+    "src/route_lab/cli.py",
+    "src/route_lab/core.py",
+    "src/route_lab/demo.py",
+    "src/route_lab/service.py",
+    "src/route_lab/__init__.py",
+    "src/route_lab/__main__.py"
+  ],
+  "changed_source_files": [
+    "src/route_lab/static/app.js",
+    "src/route_lab/static/index.html",
+    "src/route_lab/static/style.css"
+  ]
+}

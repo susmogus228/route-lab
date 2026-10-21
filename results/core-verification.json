@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-19",
+  "scope": "algorithm core, Python service, CLI, benchmark artifacts",
+  "core_red": {"failed": 47, "reason": "implementation package missing before production code"},
+  "core_green": {"passed": 47},
+  "cli_benchmark_red": {"failed": 4, "passed": 1, "reason": "CLI and benchmark modules missing before implementation"},
+  "combined_green": {"passed": 52, "command": "python -m pytest tests/test_core.py tests/test_cli_benchmark.py -q"},
+  "independent_oracle": "separately implemented Bellman-Ford; no production adjacency/cost helpers",
+  "exhaustive_grid_endpoint_cases": 648,
+  "random_grid_cases": 60,
+  "algorithms_per_case": 2,
+  "recorded_scenarios": 45,
+  "benchmark_summary_rows": 90,
+  "timed_runs": 450,
+  "artifact_reconciliation": {"verified": true, "command": "python scripts/verify_results.py", "source_sha256": "c1d6271a75e9e60b34783cb82e3478fc6bf6ff3137095b9497e06db46435746d"},
+  "cli_example": {"reachable": true, "cost": 6, "steps": 6, "csv_rows": 7},
+  "not_verified_here": ["HTTP adapter", "browser UI", "wheel isolated install", "GitHub publication", "public deployment", "external NetworkX oracle"],
+  "timing_limitations": ["Shared development host; process load not isolated", "No universal speedup conclusion", "Trace-disabled benchmark differs from interactive trace-enabled solve"]
+}

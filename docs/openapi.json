@@ -1,0 +1,1561 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "RouteLab local API",
+    "version": "0.1.1",
+    "description": "No API key. Runs on loopback. Models and datasets are local; no paid external inference API."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Local service status",
+        "responses": {
+          "200": {
+            "description": "Recorded or live response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evidence": {
+      "get": {
+        "summary": "Available recorded evidence downloads",
+        "responses": {
+          "200": {
+            "description": "Recorded or live response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/presets": {
+      "get": {
+        "summary": "Original editable synthetic scenarios",
+        "responses": {
+          "200": {
+            "description": "Recorded or live response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/benchmark": {
+      "get": {
+        "summary": "Recorded benchmark summary",
+        "responses": {
+          "200": {
+            "description": "Recorded or live response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/compare": {
+      "post": {
+        "summary": "Compare optimal costs on the same map",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "grid",
+                  "start",
+                  "goal"
+                ],
+                "properties": {
+                  "grid": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 128,
+                    "items": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 128,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9
+                      }
+                    },
+                    "description": "Rectangular; 0=wall, 1..9=entry cost"
+                  },
+                  "start": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "goal": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "trace_limit": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2048,
+                    "default": 512
+                  }
+                },
+                "additionalProperties": false
+              },
+              "example": {
+                "grid": [
+                  [
+                    1,
+                    9,
+                    9,
+                    9,
+                    1
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ],
+                "start": [
+                  0,
+                  0
+                ],
+                "goal": [
+                  0,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful calculation, including valid abstention or unreachable results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "results",
+                    "costs_agree"
+                  ],
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "algorithm",
+                          "reachable",
+                          "cost",
+                          "cost_unit",
+                          "path",
+                          "steps",
+                          "expanded",
+                          "heap_peak",
+                          "runtime_ms",
+                          "trace",
+                          "trace_truncated"
+                        ],
+                        "properties": {
+                          "algorithm": {
+                            "type": "string",
+                            "enum": [
+                              "astar",
+                              "dijkstra"
+                            ]
+                          },
+                          "reachable": {
+                            "type": "boolean"
+                          },
+                          "cost": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "cost_unit": {
+                            "const": "abstract_entry_cost"
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "minItems": 2,
+                              "maxItems": 2,
+                              "items": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            }
+                          },
+                          "steps": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "expanded": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "heap_peak": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "runtime_ms": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "trace": {
+                            "type": "array",
+                            "maxItems": 2048,
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "node",
+                                "g",
+                                "h",
+                                "f"
+                              ],
+                              "properties": {
+                                "node": {
+                                  "type": "array",
+                                  "minItems": 2,
+                                  "maxItems": 2,
+                                  "items": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                  }
+                                },
+                                "g": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "h": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "f": {
+                                  "type": "number",
+                                  "minimum": 0
+                                }
+                              }
+                            }
+                          },
+                          "trace_truncated": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "costs_agree": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid host or cross-origin request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 256 KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Expected application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Calculation failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/solve": {
+      "post": {
+        "summary": "Solve a weighted map",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "grid",
+                  "start",
+                  "goal"
+                ],
+                "properties": {
+                  "grid": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 128,
+                    "items": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 128,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9
+                      }
+                    },
+                    "description": "Rectangular; 0=wall, 1..9=entry cost"
+                  },
+                  "start": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "goal": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "trace_limit": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2048,
+                    "default": 512
+                  },
+                  "algorithm": {
+                    "type": "string",
+                    "enum": [
+                      "astar",
+                      "dijkstra"
+                    ],
+                    "default": "astar"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "example": {
+                "grid": [
+                  [
+                    1,
+                    9,
+                    9,
+                    9,
+                    1
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ],
+                "start": [
+                  0,
+                  0
+                ],
+                "goal": [
+                  0,
+                  4
+                ],
+                "algorithm": "astar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful calculation, including valid abstention or unreachable results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "algorithm",
+                    "reachable",
+                    "cost",
+                    "cost_unit",
+                    "path",
+                    "steps",
+                    "expanded",
+                    "heap_peak",
+                    "runtime_ms",
+                    "trace",
+                    "trace_truncated"
+                  ],
+                  "properties": {
+                    "algorithm": {
+                      "type": "string",
+                      "enum": [
+                        "astar",
+                        "dijkstra"
+                      ]
+                    },
+                    "reachable": {
+                      "type": "boolean"
+                    },
+                    "cost": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0
+                    },
+                    "cost_unit": {
+                      "const": "abstract_entry_cost"
+                    },
+                    "path": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "steps": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0
+                    },
+                    "expanded": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "heap_peak": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "runtime_ms": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "trace": {
+                      "type": "array",
+                      "maxItems": 2048,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "node",
+                          "g",
+                          "h",
+                          "f"
+                        ],
+                        "properties": {
+                          "node": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0
+                            }
+                          },
+                          "g": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "h": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "f": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        }
+                      }
+                    },
+                    "trace_truncated": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid host or cross-origin request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 256 KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Expected application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Calculation failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/threshold": {
+      "post": {
+        "summary": "Find the first cost where the cost-1 reference route loses optimality",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "grid",
+                  "start",
+                  "goal",
+                  "cells"
+                ],
+                "properties": {
+                  "grid": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 128,
+                    "items": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 128,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9
+                      }
+                    },
+                    "description": "Rectangular; at most 256 total cells for analysis; 0=wall, 1..9=entry cost"
+                  },
+                  "start": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "goal": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "cells": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 32,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "description": "Traversable non-endpoint cells whose entry cost changes together"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "example": {
+                "grid": [
+                  [
+                    1,
+                    9,
+                    9,
+                    9,
+                    1
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ],
+                "start": [
+                  0,
+                  0
+                ],
+                "goal": [
+                  0,
+                  4
+                ],
+                "cells": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    0,
+                    2
+                  ],
+                  [
+                    0,
+                    3
+                  ]
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful calculation, including valid abstention or unreachable results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "schema_version",
+                    "cost_unit",
+                    "cells",
+                    "reference_path",
+                    "first_switch_cost",
+                    "levels"
+                  ],
+                  "properties": {
+                    "schema_version": {
+                      "const": 1
+                    },
+                    "cost_unit": {
+                      "const": "abstract_entry_cost"
+                    },
+                    "cells": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "reference_path": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "first_switch_cost": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 1,
+                      "maximum": 9
+                    },
+                    "levels": {
+                      "type": "array",
+                      "minItems": 9,
+                      "maxItems": 9,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "entry_cost",
+                          "reachable",
+                          "cost",
+                          "steps",
+                          "path",
+                          "reference_cost",
+                          "reference_optimal"
+                        ],
+                        "properties": {
+                          "entry_cost": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 9
+                          },
+                          "reachable": {
+                            "type": "boolean"
+                          },
+                          "cost": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "steps": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "minItems": 2,
+                              "maxItems": 2,
+                              "items": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            }
+                          },
+                          "reference_cost": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "reference_optimal": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid host or cross-origin request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 256 KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Expected application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Calculation failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/closures": {
+      "post": {
+        "summary": "Test every single-cell closure independently on a map up to 256 cells",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "grid",
+                  "start",
+                  "goal"
+                ],
+                "properties": {
+                  "grid": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 128,
+                    "items": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 128,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9
+                      }
+                    },
+                    "description": "Rectangular; at most 256 total cells for analysis; 0=wall, 1..9=entry cost"
+                  },
+                  "start": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "goal": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "example": {
+                "grid": [
+                  [
+                    1,
+                    9,
+                    9,
+                    9,
+                    1
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ],
+                "start": [
+                  0,
+                  0
+                ],
+                "goal": [
+                  0,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful calculation, including valid abstention or unreachable results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "schema_version",
+                    "cost_unit",
+                    "baseline",
+                    "tested_count",
+                    "critical_count",
+                    "critical_cells",
+                    "worst_delta",
+                    "cells"
+                  ],
+                  "properties": {
+                    "schema_version": {
+                      "const": 1
+                    },
+                    "cost_unit": {
+                      "const": "abstract_entry_cost"
+                    },
+                    "baseline": {
+                      "type": "object",
+                      "required": [
+                        "algorithm",
+                        "reachable",
+                        "cost",
+                        "cost_unit",
+                        "path",
+                        "steps",
+                        "expanded",
+                        "heap_peak",
+                        "runtime_ms",
+                        "trace",
+                        "trace_truncated"
+                      ],
+                      "properties": {
+                        "algorithm": {
+                          "type": "string",
+                          "enum": [
+                            "astar",
+                            "dijkstra"
+                          ]
+                        },
+                        "reachable": {
+                          "type": "boolean"
+                        },
+                        "cost": {
+                          "type": [
+                            "number",
+                            "null"
+                          ],
+                          "minimum": 0
+                        },
+                        "cost_unit": {
+                          "const": "abstract_entry_cost"
+                        },
+                        "path": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0
+                            }
+                          }
+                        },
+                        "steps": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "minimum": 0
+                        },
+                        "expanded": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "heap_peak": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "runtime_ms": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "trace": {
+                          "type": "array",
+                          "maxItems": 2048,
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "node",
+                              "g",
+                              "h",
+                              "f"
+                            ],
+                            "properties": {
+                              "node": {
+                                "type": "array",
+                                "minItems": 2,
+                                "maxItems": 2,
+                                "items": {
+                                  "type": "integer",
+                                  "minimum": 0
+                                }
+                              },
+                              "g": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "h": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "f": {
+                                "type": "number",
+                                "minimum": 0
+                              }
+                            }
+                          }
+                        },
+                        "trace_truncated": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "tested_count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    "critical_count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    "critical_cells": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "worst_delta": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0
+                    },
+                    "cells": {
+                      "type": "array",
+                      "maxItems": 255,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "cell",
+                          "reachable",
+                          "cost",
+                          "steps",
+                          "delta",
+                          "critical"
+                        ],
+                        "properties": {
+                          "cell": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0
+                            }
+                          },
+                          "reachable": {
+                            "type": "boolean"
+                          },
+                          "cost": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "steps": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "delta": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "critical": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid host or cross-origin request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 256 KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Expected application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Calculation failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "code"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
